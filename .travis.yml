@@ -1,6 +1,17 @@
 language: go
-
 install: make get-deps
-
 go:
-   - tip
+- tip
+before_deploy: "make release"
+deploy:
+  provider: releases
+  api_key:
+    secure: cOIFLY+1svrKvgP+GwYrVslAWHMN4DMF/Hnia/Db66paYiOuoiVlYjrb8ajVZHaI1JQIPZVWDcFUz4t1/vXk2PDEysLg/PmXkAIrALNINwd3pF4B1Bpr7hJq271kYinlvNAeCq1oPqFySPdNaNNFC073YxJwaYWQjJ1cQBtOvcjt9gkrdK/SL2Vz04QVrxPyJwJP4JH0mUDVn2gWBPqqhYB6o3st5bMA/SBiBTQCTWWU0jjdNp+QKiNYnm2Z/w9zfaUvTEm1BZqVrMNuYInmNXtnCJL8KysHSaio2POucUKGIjPpCN+wxYVFGBu0Pfw13DeTgOzXO1Cq/ZjO9Yb7e5PyyDwdilq7umk33ShqTe7qBbnio/qpUGmNTmXVPUlZ0dCU8NMVIImvteVVWslHWoBEezGJQVC8+KDdWhVr1GiJbUM5IwJwTQI6LNLlWTGgTspG6UU/egeWimyDfIluDWZ00fSjt1Ycjo9f6l8Wyq0XDrQljL5nTsNF6gHH0Q/Z/Rx2emi2srajsEH0JYX18E0jYF2yNv1RBELcgJQEVZwPEpw4e9Z5u9Rs2gQmgXXkcTXLUjdDcLuCvU8Ju1H8gL3VpWiv7dQqZdxI01hwtGkvq/7LBSgR6TeXzYGs6cqsMD3bh5x/84RL2YbaZv2vMry0XKQ7SbGRn0xRcUT0gxo=
+  file:
+     - "fpigs-linux-amd64"
+     - "fpigs-darwin-amd64"
+     - "fpigs-openbsd-amd64"
+     - "fpigs-windows-amd64"
+  skip_cleanup: true
+  on:
+     tags: true
