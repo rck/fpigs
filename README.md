@@ -53,3 +53,9 @@ Press <return> to stop processing
 
 7 largest files: 2512.0 KB / 2512.0 KB total
 ```
+
+# Docker
+```
+docker pull rck81/fpigs
+docker run -v $HOME:/fpigs -w /fpigs -it --rm rck81/fpigs
+```
