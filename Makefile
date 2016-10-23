@@ -5,12 +5,15 @@ VERSION=`git describe --tags --always --dirty`
 
 LDFLAGS=-ldflags "-X main.Version=${VERSION}"
 
-all: build test
+all: test build
 
-build:
+get-deps:
+	go get golang.org/x/crypto/ssh/terminal
+
+build: get-deps
 	go build ${LDFLAGS} -o ${BINARY}
 
-test:
+test: get-deps
 	go test
 
 install:
