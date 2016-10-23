@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rck/fpigs.svg?branch=master)](https://travis-ci.org/rck/fpigs)
+
 # fpigs
 Find large files fast
 
