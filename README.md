@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/rck/fpigs.svg?branch=master)](https://travis-ci.org/rck/fpigs)
+[![Docker Automated build](https://img.shields.io/docker/automated/rck/fpigs.svg)](https://hub.docker.com/r/rck81/fpigs/)
 
 # fpigs
 Find large files fast
