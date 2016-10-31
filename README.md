@@ -10,10 +10,11 @@ While it is at least a useful tool for myself, it is basically a toy project to 
 # Synopsis
 
 ```
-Usage of fpigs (fc85e1e-dirty):
-  -c	Files from current directory only (no recursion)
+Usage: fpigs [OPTION]... [STARTDIR]...
   -concurrent number
     	Start this number of concurrent tree walks (values <= 0 get set to 1) (default 20)
+  -d depth
+    	Recursion depth (negative values mean unlimited) (default -1)
   -i regex
     	Ignore files/directories matching regex (can be used multiple times)
   -n number
@@ -54,6 +55,15 @@ Press <return> to stop processing
 
 7 largest files: 2512.0 KB / 2512.0 KB total
 ```
+
+# Regex filtering
+Filters are applied when:
+- A directory is traversed (This allows cutting of ".git$")
+- A file is inserted in the current list of the N largest files.
+
+# Releases
+Pre-built binaries are provided [here](https://github.com/rck/fpigs/releases/latest). Please note that these
+binaries are automatically built by [Travis-CI](https://travis-ci.org). Your decision if you trust them.
 
 # Docker
 ```

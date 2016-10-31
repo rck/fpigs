@@ -25,7 +25,7 @@ release:
 	done
 
 doc: build
-	help2man -s 1 --no-discard-stderr -n "Find largest files" ./fpigs -N -o fpigs.1
+	help2man -s 1 --no-discard-stderr -n "Find largest files fast" ./fpigs -N -o fpigs.1
 
 clean:
 	for os in ${OS}; do \
