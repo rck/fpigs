@@ -34,7 +34,7 @@ var Program, Version string
 var (
 	flagN  = flag.Int("n", 10, "Print this `number` of largest files")
 	flagO  = flag.Bool("o", false, "Print file names only (e.g., for xargs scripting)")
-	flagC  = flag.Bool("c", false, "Files from current directory only (no recursion)")
+	flagD  = flag.Int("d", -1, "Recursion `depth` (negative values mean unlimited)")
 	flagV  = flag.Bool("version", false, "Print version and exit")
 	flagCC = flag.Int("concurrent", 20, "Start this `number` of concurrent tree walks (values <= 0 get set to 1)")
 	flagU  = UnitFlag("u", Units["GiB"], "Print sizes in specified `unit` ("+allUnits()+")")
@@ -50,7 +50,8 @@ func main() {
 	}
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage of %s (%s):\n", Program, Version)
+		fmt.Fprintf(os.Stderr, "%s (%s)\n", Program, Version)
+		fmt.Fprintf(os.Stderr, "Usage: %s [OPTION]... [STARTDIR]...\n", Program)
 		flag.PrintDefaults()
 	}
 
@@ -82,7 +83,7 @@ func main() {
 	var n sync.WaitGroup
 	for _, root := range roots {
 		n.Add(1)
-		go walkDir(root, &n, fileInfos)
+		go walkDir(root, &n, fileInfos, 0)
 	}
 	go func() {
 		n.Wait()
@@ -133,7 +134,7 @@ func cancelled() bool {
 	}
 }
 
-func walkDir(dir string, n *sync.WaitGroup, fileInfos chan<- fileInfo) {
+func walkDir(dir string, n *sync.WaitGroup, fileInfos chan<- fileInfo, depth int) {
 	defer n.Done()
 	if cancelled() {
 		return
@@ -141,9 +142,9 @@ func walkDir(dir string, n *sync.WaitGroup, fileInfos chan<- fileInfo) {
 	for _, entry := range dirents(dir) {
 		fullPath := filepath.Join(dir, entry.Name())
 		if entry.IsDir() {
-			if !*flagC && !ignore(fullPath) {
+			if (*flagD < 0 || depth < *flagD) && !ignore(fullPath) {
 				n.Add(1)
-				go walkDir(fullPath, n, fileInfos) // walk sub directory
+				go walkDir(fullPath, n, fileInfos, depth+1) // walk sub directory
 			}
 		} else {
 			fileInfos <- fileInfo{path: fullPath, size: entry.Size()}
