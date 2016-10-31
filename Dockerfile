@@ -3,7 +3,7 @@ MAINTAINER Roland Kammerer <dev.rck@gmail.com>
 
 # docker run -v $HOME:/fpigs -w /fpigs -it --rm fpigs
 
-ENV FPIGS_VERSION 0.1
+ENV FPIGS_VERSION 0.2
 
 RUN apk add --no-cache --virtual .build-deps wget ca-certificates
 RUN wget "https://github.com/rck/fpigs/releases/download/v${FPIGS_VERSION}/fpigs-linux-amd64" -O /usr/local/bin/fpigs
