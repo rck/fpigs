@@ -1,0 +1,10 @@
+FROM scratch
+MAINTAINER Roland Kammerer <dev.rck@gmail.com>
+# The Dockerfile creates an image that is ~10MB
+# This one generates am image that is ~2.5MB, but
+# has the disadvantage that it does not integrate well with Travis/Dockerhub
+
+# docker run -v $HOME:/fpigs -w /fpigs -it --rm fpigs
+
+ADD fpigs /usr/local/bin/fpigs
+CMD ["fpigs"]
